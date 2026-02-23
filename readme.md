@@ -1,0 +1,1 @@
+To run the project, go into -> mozaikProjekt/laravel -> php artisan serve
