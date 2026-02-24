@@ -85,6 +85,71 @@
             color: #666;
             font-size: 0.9rem;
         }
+
+        /* Filter Bar */
+        .filter-bar {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 1rem 2rem;
+        }
+
+        .filter-bar form {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar input,
+        .filter-bar select {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: #f9f9f9;
+        }
+
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            outline: none;
+            border-color: #1a1a2e;
+        }
+
+        .filter-bar input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-bar button {
+            padding: 0.5rem 1.25rem;
+            background-color: #1a1a2e;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .filter-bar button:hover {
+            background-color: #16213e;
+        }
+
+        .filter-bar .filter-reset {
+            background: none;
+            color: #888;
+            text-decoration: underline;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0;
+        }
+
+        .filter-bar .filter-reset:hover {
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -96,6 +161,26 @@
             <li><a href="/books">Books</a></li>
         </ul>
     </nav>
+
+    <div class="filter-bar">
+        <form method="GET" action="/">
+            <input type="text" name="search" placeholder="Search by title or author..." value="{{ request('search') }}">
+
+            <select name="sort">
+                <option value="" disabled {{ request('sort') ? '' : 'selected' }}>Sort by</option>
+                <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>Title A-Z</option>
+                <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Title Z-A</option>
+                <option value="year_desc" {{ request('sort') == 'year_desc' ? 'selected' : '' }}>Newest First</option>
+                <option value="year_asc" {{ request('sort') == 'year_asc' ? 'selected' : '' }}>Oldest First</option>
+                <option value="sold_desc" {{ request('sort') == 'sold_desc' ? 'selected' : '' }}>Most Sold</option>
+                <option value="stock_desc" {{ request('sort') == 'stock_desc' ? 'selected' : '' }}>Most Stock</option>
+                <option value="stock_asc" {{ request('sort') == 'stock_asc' ? 'selected' : '' }}>Least Stock</option>
+            </select>
+
+            <button type="submit">Filter</button>
+            <a href="/" class="filter-reset">Reset</a>
+        </form>
+    </div>
 
     <div class="container">
         <h2 class="section-title">Books</h2>
