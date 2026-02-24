@@ -77,6 +77,20 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
         .card h3 {
             margin-bottom: 0.5rem;
         }
@@ -150,16 +164,29 @@
         .filter-bar .filter-reset:hover {
             color: #333;
         }
+
+        .add-button {
+            display: inline-block;
+            padding: 0.6rem 1.25rem;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .add-button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <a href="/" class="logo">Mozaik Projekt</a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/books">Books</a></li>
-        </ul>
     </nav>
 
     <div class="filter-bar">
@@ -184,14 +211,17 @@
 
     <div class="container">
         <h2 class="section-title">Books</h2>
+        <a href="/books/add" class="add-button">Add New Book</a>
         <div class="content-grid">
             @foreach ($books as $book)
-                <div class="card">
-                    <h3>{{ $book->title }}</h3>
-                    <p>{{ $book->author }} ({{ $book->published_year }})</p>
-                    <p> Remaining Stock: {{ $book->remaining_stock }} </p>
-                    <p> Units Sold: {{ $book->units_sold }} </p>
-                </div>
+                <a href="/books/{{ $book->id }}" class="card-link">
+                    <div class="card">
+                        <h3>{{ $book->title }}</h3>
+                        <p>{{ $book->author }} ({{ $book->published_year }})</p>
+                        <p>Remaining Stock: {{ $book->remaining_stock }}</p>
+                        <p>Units Sold: {{ $book->units_sold }}</p>
+                    </div>
+                </a>
             @endforeach
         </div>
 

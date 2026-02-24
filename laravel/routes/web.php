@@ -28,5 +28,34 @@ Route::get('/', function () {
 });
 
 Route::get('/books/{id}', function ($id) {
-    return view('BookDetails', ['id' => $id]);
+    
+    $book = Book::find($id);
+
+    if (!$book) {
+        abort(404);
+    }
+
+    return view('Book', ['book' => $book]);
+});
+
+Route::put('/books/{id}', function ($id) {
+    $book = Book::findOrFail($id);
+
+    $book->update([
+        'title' => request('title'),
+        'author' => request('author'),
+        'published_year' => request('published_year'),
+        'units_sold' => request('units_sold'),
+        'remaining_stock' => request('remaining_stock'),
+        'description' => request('description'),
+    ]);
+
+    return redirect("/books/{$id}")->with('success', 'Book updated successfully!');
+});
+
+Route::delete('/books/{id}', function ($id) {
+    $book = Book::findOrFail($id);
+    $book->delete();
+
+    return redirect('/')->with('success', 'Book deleted successfully!');
 });
