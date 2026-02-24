@@ -19,6 +19,7 @@ class Book extends Model
         'title',
         'author',
         'published_year',
-        'description'
+        'description',
+        'units_sold'
     ];
 }

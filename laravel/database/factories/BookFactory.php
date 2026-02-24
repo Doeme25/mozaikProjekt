@@ -20,7 +20,8 @@ class BookFactory extends Factory
             'title' => fake()->sentence(3),
             'author' => fake()->name(),
             'published_year' => fake()->year(),
-            'description' => fake()->paragraph()
+            'description' => fake()->paragraph(),
+            'units_sold' => fake()->numberBetween(3000, 100000),
         ];
     }
 }

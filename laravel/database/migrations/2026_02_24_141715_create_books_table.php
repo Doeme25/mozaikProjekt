@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('author');
             $table->integer('published_year');
             $table->text('description')->nullable();
+            $table->integer('units_sold')->default(0);
             $table->timestamps();
         });
     }
