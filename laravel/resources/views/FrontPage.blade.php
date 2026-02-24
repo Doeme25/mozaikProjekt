@@ -98,28 +98,17 @@
     </nav>
 
     <div class="container">
-
-        {{-- Section: Books from DB --}}
         <h2 class="section-title">Books</h2>
         <div class="content-grid">
             @foreach ($books as $book)
                 <div class="card">
                     <h3>{{ $book->title }}</h3>
                     <p>{{ $book->author }} ({{ $book->published_year }})</p>
+                    <p> Remaining Stock: {{ $book->remaining_stock }} </p>
+                    <p> Units Sold: {{ $book->units_sold }} </p>
                 </div>
             @endforeach
         </div>
-
-        <h2 class="section-title">Featured</h2>
-        <div class="content-grid">
-            {{-- Placeholder cards --}}
-        </div>
-
-        <h2 class ="section-title">Most Sold</h2>
-        <div class="content-grid">
-            {{-- Placeholder cards --}} 
-        </div>
-    </div>
 
 </body>
 </html>
