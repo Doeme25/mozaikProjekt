@@ -20,6 +20,7 @@ class Book extends Model
         'author',
         'published_year',
         'description',
-        'units_sold'
+        'units_sold',
+        'remaining_stock',
     ];
 }

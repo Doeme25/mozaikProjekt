@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('published_year');
             $table->text('description')->nullable();
             $table->integer('units_sold')->default(0);
+            $table->integer('remaining_stock')->default(0);
             $table->timestamps();
         });
     }
