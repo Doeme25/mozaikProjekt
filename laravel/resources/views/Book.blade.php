@@ -150,6 +150,15 @@
             background-color: #c82333;
         }
 
+        .btn-delete {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background-color: #a71d2a;
+        }
+
         .btn-group {
             display: flex;
             gap: 0.5rem;
@@ -227,7 +236,6 @@
 
                     <div>
                         <button type="button" class="btn btn-edit view-mode" onclick="toggleEdit()">Edit</button>
-                        <button type="submit" class="btn btn-save edit-mode" formaction="/books/{{ $book->id }}">Delete</button>
                         <div class="btn-group edit-mode">
                             <button type="submit" class="btn btn-save">Save</button>
                             <button type="button" class="btn btn-cancel" onclick="toggleEdit()">Cancel</button>
@@ -260,6 +268,28 @@
                 <div class="label" style="margin-bottom: 0.5rem;">Description</div>
                 <p class="book-description view-mode">{{ $book->description ?? 'No description' }}</p>
                 <textarea name="description" class="edit-mode edit-input" rows="4" style="resize: vertical;">{{ $book->description }}</textarea>
+            </form>
+
+            <div>
+                @if($book->cover_image)
+                    <img src="/uploads/{{ $book->cover_image }}" alt="Cover Image" style="max-width: 200px; margin-top: 1rem; border-radius: 6px;">
+                @else
+                    <p style="margin-top: 1rem; color: #999;">No cover image uploaded.</p>
+                @endif
+        </div>
+        <div>
+            <form action="/books/{{ $book->id }}/upload" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="image" required>
+                <button type="submit" class="upload-image-btn"> Upload Image</button>
+            </form> 
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+            <form action="/books/{{ $book->id }}/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-delete">Delete Book</button>
             </form>
         </div>
     </div>

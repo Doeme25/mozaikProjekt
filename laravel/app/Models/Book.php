@@ -22,5 +22,6 @@ class Book extends Model
         'description',
         'units_sold',
         'remaining_stock',
+        'cover_image',
     ];
 }

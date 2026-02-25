@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Book;
+use App\Http\Controllers\BookController;
 
 Route::get('/', function () {
     $query = Book::query();
@@ -53,9 +54,11 @@ Route::put('/books/{id}', function ($id) {
     return redirect("/books/{$id}")->with('success', 'Book updated successfully!');
 });
 
-Route::delete('/books/{id}', function ($id) {
+Route::delete('/books/{id}/delete', function ($id) {
     $book = Book::findOrFail($id);
     $book->delete();
 
-    return redirect('/')->with('success', 'Book deleted successfully!');
+    return redirect('/');
 });
+
+Route::post('/books/{id}/upload', [BookController::class, 'upload']);

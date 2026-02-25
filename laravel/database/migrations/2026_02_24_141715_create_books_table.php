@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('units_sold')->default(0);
             $table->integer('remaining_stock')->default(0);
+            $table->string('cover_image')->nullable();
             $table->timestamps();
         });
     }
