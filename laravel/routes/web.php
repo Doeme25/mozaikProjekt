@@ -28,6 +28,32 @@ Route::get('/', function () {
     return view('FrontPage', ['books' => $books]);
 });
 
+Route::get('/books/add', function () {
+    return view('AddBook');
+});
+
+Route::post('/books/create', function () {
+    $data = [
+        'title' => request('title'),
+        'author' => request('author'),
+        'published_year' => request('published_year'),
+        'units_sold' => request('units_sold', 0),
+        'remaining_stock' => request('remaining_stock', 0),
+        'description' => request('description'),
+    ];
+
+    if (request()->hasFile('image')) {
+        $file = request()->file('image');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $filename);
+        $data['cover_image'] = $filename;
+    }
+
+    $book = Book::create($data);
+
+    return redirect("/books/{$book->id}");
+});
+
 Route::get('/books/{id}', function ($id) {
     
     $book = Book::find($id);
@@ -36,7 +62,14 @@ Route::get('/books/{id}', function ($id) {
         abort(404);
     }
 
-    return view('Book', ['book' => $book]);
+    $lang = request('lang', 'en');
+    $translation = $book->translation($lang);
+
+    return view('Book', [
+        'book' => $book,
+        'translation' => $translation,
+        'lang' => $lang,
+    ]);
 });
 
 Route::put('/books/{id}', function ($id) {
@@ -51,7 +84,7 @@ Route::put('/books/{id}', function ($id) {
         'description' => request('description'),
     ]);
 
-    return redirect("/books/{$id}")->with('success', 'Book updated successfully!');
+    return redirect("/books/{$id}");
 });
 
 Route::delete('/books/{id}/delete', function ($id) {

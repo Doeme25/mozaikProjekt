@@ -205,6 +205,35 @@
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
+
+        .lang-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .lang-btn {
+            padding: 0.4rem 1rem;
+            border: 2px solid #1a1a2e;
+            border-radius: 6px;
+            background: #fff;
+            color: #1a1a2e;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .lang-btn:hover {
+            background-color: #16213e;
+            color: #fff;
+        }
+
+        .lang-btn.active {
+            background-color: #1a1a2e;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -220,6 +249,11 @@
             <div class="success-message">{{ session('success') }}</div>
         @endif
 
+        <div class="lang-buttons">
+            <a href="/books/{{ $book->id }}?lang=en" class="lang-btn {{ $lang === 'en' ? 'active' : '' }}">English</a>
+            <a href="/books/{{ $book->id }}?lang=hu" class="lang-btn {{ $lang === 'hu' ? 'active' : '' }}">Magyar</a>
+        </div>
+
         <div class="book-detail" id="bookDetail">
             <form method="POST" action="/books/{{ $book->id }}" id="editForm">
                 @csrf
@@ -227,7 +261,7 @@
 
                 <div class="book-header">
                     <div style="flex: 1;">
-                        <h1 class="view-mode">{{ $book->title }}</h1>
+                        <h1 class="view-mode">{{ $translation->title ?? $book->title }}</h1>
                         <input type="text" name="title" value="{{ $book->title }}" class="edit-mode edit-input edit-input-title">
 
                         <p class="author view-mode">by {{ $book->author }}</p>
@@ -266,7 +300,7 @@
                 <hr class="divider">
 
                 <div class="label" style="margin-bottom: 0.5rem;">Description</div>
-                <p class="book-description view-mode">{{ $book->description ?? 'No description' }}</p>
+                <p class="book-description view-mode">{{ $translation->description ?? $book->description ?? 'No description' }}</p>
                 <textarea name="description" class="edit-mode edit-input" rows="4" style="resize: vertical;">{{ $book->description }}</textarea>
             </form>
 

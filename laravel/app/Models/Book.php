@@ -24,4 +24,14 @@ class Book extends Model
         'remaining_stock',
         'cover_image',
     ];
+
+    public function translations()
+    {
+        return $this->hasMany(Translation::class);
+    }
+
+    public function translation($language = 'en')
+    {
+        return $this->translations()->where('language', $language)->first();
+    }
 }
