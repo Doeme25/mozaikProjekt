@@ -326,6 +326,11 @@
                 <button type="submit" class="btn btn-delete">Delete Book</button>
             </form>
         </div>
+
+        <div style="margin-top: 1.5rem; font-size: 0.8rem; color: #999;">
+            <p>Uploaded at: {{ $book->created_at->format('Y-m-d H:i') }}</p>
+            <p>Last updated at: {{ $book->updated_at->format('Y-m-d H:i') }}</p>
+        </div>
     </div>
 
     <script>
